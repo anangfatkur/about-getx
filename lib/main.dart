@@ -1,44 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'controller/counter_controller.dart';
+import './controller/counter_controller.dart';
+import './controller/orang_controller.dart';
 
 void main() {
   runApp(MyApp());
 }
 
+// ignore: must_be_immutable
 class MyApp extends StatelessWidget {
-  final counterC = Get.put(CounterController());
+  // final orangController = Get.put(OrangController());
+
+  // final counterController = Get.put(CounterController());
+
   MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => MaterialApp(
-          theme: counterC.isDark.value ? ThemeData.dark() : ThemeData.light(),
-          home: HomePage(),
-        ));
-  }
-}
-
-class HomePage extends StatelessWidget {
-  final ckecil = Get.find<CounterController>();
-  HomePage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Obx(
-          () => Text(
-            "Angka ${ckecil.counter}",
-            style: const TextStyle(fontSize: 35),
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(),
+        body: Center(
+          // child: GetX<CounterController>(
+          child: GetBuilder<CounterController>(
+            init: CounterController(),
+            builder: (controller) => Text(
+              // "Angka ${controller.counter.value}",
+              "Angka ${controller.counter}",
+              style: const TextStyle(fontSize: 35),
+            ),
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        // onPressed: () => counterC.increment(),
-        onPressed: () => ckecil.changeTheme(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            // orangController.changeUppercase();
+            // counterController.increment();
+            Get.find<CounterController>().increment();
+          },
+        ),
       ),
     );
   }
