@@ -13,10 +13,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: counterC.isDark.value ? ThemeData.dark() : ThemeData.light(),
-      home: HomePage(),
-    );
+    return Obx(() => MaterialApp(
+          theme: counterC.isDark.value ? ThemeData.dark() : ThemeData.light(),
+          home: HomePage(),
+        ));
   }
 }
 
