@@ -45,8 +45,46 @@ void main() {
 // }
 
 //YOUTUBE: GETX UNIQUE ID
+// class MyApp extends StatelessWidget {
+//   // final countC = Get.put(CountController());
+//   MyApp({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: Scaffold(
+//         appBar: AppBar(),
+//         body: GetX<CountController>(
+//           init: CountController(),
+//           builder: (c) {
+//             return Text(
+//               "Angka ${c.count}",
+//               style: const TextStyle(
+//                 fontSize: 35,
+//               ),
+//             );
+//           },
+//         ),
+//         floatingActionButton: FloatingActionButton(
+//           // onPressed: () => countC.add(),
+//           onPressed: () => Get.find<CountController>().add(),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class CountController extends GetxController {
+//   var count = 0.obs;
+
+//   void add() {
+//     count++;
+//   }
+// }
+
+//YOUTUBE: GETX UNIQUE ID /SIMPLE  GETBUILDER
 class MyApp extends StatelessWidget {
-  // final countC = Get.put(CountController());
+  final countC = Get.put(CountController());
   MyApp({Key? key}) : super(key: key);
 
   @override
@@ -54,20 +92,36 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(),
-        body: GetX<CountController>(
-          init: CountController(),
-          builder: (c) {
-            return Text(
-              "Angka ${c.count}",
-              style: const TextStyle(
-                fontSize: 35,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GetBuilder<CountController>(
+                id: "satu",
+                builder: (_) {
+                  return Text(
+                    "Angka ${countC.count}",
+                    style: const TextStyle(
+                      fontSize: 35,
+                    ),
+                  );
+                },
               ),
-            );
-          },
+              GetBuilder<CountController>(
+                builder: (_) {
+                  return Text(
+                    "Angka ${countC.count}",
+                    style: const TextStyle(
+                      fontSize: 35,
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
         floatingActionButton: FloatingActionButton(
-          // onPressed: () => countC.add(),
-          onPressed: () => Get.find<CountController>().add(),
+          onPressed: () => countC.add(),
         ),
       ),
     );
@@ -75,9 +129,10 @@ class MyApp extends StatelessWidget {
 }
 
 class CountController extends GetxController {
-  var count = 0.obs;
+  var count = 0;
 
   void add() {
     count++;
+    update((['satu']));
   }
 }
